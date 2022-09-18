@@ -1,0 +1,11 @@
+Create view PT_Budget as
+Select *, Case when Avg_Price< =100 Then 'Affordable'
+when Avg_Price > 1000 Then 'Luxurious'
+when Avg_Price between 500 and 1000 Then 'Ultra Premium'
+else 'Premium' 
+end as 'Stay' 
+FROM
+(Select Property_Type, avg(price) as Avg_Price from listing_dallas_df  group by property_type 
+UNION
+Select Property_Type, avg(price) as Avg_Price from listing_austin_df  group by property_type)Ap;
+Select * from PT_Budget;
